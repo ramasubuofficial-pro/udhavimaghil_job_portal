@@ -14,7 +14,7 @@ export default function Footer() {
             <span className="text-sm text-slate-500 dark:text-slate-400 font-medium">Hiring, without the noise</span>
           </div>
           <p className="text-xs text-slate-400 dark:text-slate-500">
-            &copy; {new Date().getFullYear()} Udhavimaghil. All rights reserved. &bull; Created by <a href="#" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors underline decoration-dotted">NorBit Solutions</a>
+            &copy; {new Date().getFullYear()} Udhavimaghil. All rights reserved. &bull; Created by <a href="#" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors underline decoration-dotted">Hogwartz digital</a>
           </p>
         </div>
 
