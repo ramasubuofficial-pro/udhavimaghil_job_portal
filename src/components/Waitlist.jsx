@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { ArrowRight, Check, Loader2, User, Briefcase, Mail } from 'lucide-react';
+import { ArrowRight, Check, Loader2, User, Briefcase, Mail, Phone } from 'lucide-react';
 import { supabase } from '../lib/supabaseClient';
 
 export default function Waitlist() {
   const [userType, setUserType] = useState('seeker');
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
   const [status, setStatus] = useState('idle'); // idle, loading, success, error
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -16,7 +18,7 @@ export default function Waitlist() {
     try {
       const { data, error } = await supabase
         .from('waitlist')
-        .insert([{ email, user_type: userType }]);
+        .insert([{ email, user_type: userType, name, phone }]);
         
       if (error) {
         if (error.code === '23505') { // Unique violation
@@ -28,7 +30,9 @@ export default function Waitlist() {
         setStatus('error');
       } else {
         setStatus('success');
+        setName('');
         setEmail('');
+        setPhone('');
       }
     } catch (err) {
       console.error(err);
@@ -123,6 +127,25 @@ export default function Waitlist() {
                   </div>
                 </div>
 
+                {/* Full Name input */}
+                <div className="space-y-3">
+                  <label htmlFor="name" className="text-sm font-semibold text-slate-700 dark:text-slate-300">Full Name</label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                      <User className="h-5 w-5 text-slate-400" />
+                    </div>
+                    <input 
+                      type="text" 
+                      id="name" 
+                      required
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      className={`block w-full pl-11 pr-4 py-3.5 bg-slate-50 dark:bg-slate-950 border ${status === 'error' ? 'border-red-500' : 'border-slate-200 dark:border-slate-800'} rounded-xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-colors`}
+                      placeholder="John Doe"
+                    />
+                  </div>
+                </div>
+
                 {/* Email input */}
                 <div className="space-y-3">
                   <label htmlFor="email" className="text-sm font-semibold text-slate-700 dark:text-slate-300">Email Address</label>
@@ -137,12 +160,31 @@ export default function Waitlist() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       className={`block w-full pl-11 pr-4 py-3.5 bg-slate-50 dark:bg-slate-950 border ${status === 'error' ? 'border-red-500' : 'border-slate-200 dark:border-slate-800'} rounded-xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-colors`}
-                      placeholder="you@example.com"
+                      placeholder="john@example.com"
                     />
                   </div>
                   {status === 'error' && (
                     <p className="text-red-500 text-xs font-medium mt-1.5">{errorMessage}</p>
                   )}
+                </div>
+
+                {/* Phone Number input */}
+                <div className="space-y-3">
+                  <label htmlFor="phone" className="text-sm font-semibold text-slate-700 dark:text-slate-300">Phone Number (For WhatsApp)</label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                      <Phone className="h-5 w-5 text-slate-400" />
+                    </div>
+                    <input 
+                      type="tel" 
+                      id="phone" 
+                      required
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      className={`block w-full pl-11 pr-4 py-3.5 bg-slate-50 dark:bg-slate-950 border ${status === 'error' ? 'border-red-500' : 'border-slate-200 dark:border-slate-800'} rounded-xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-colors`}
+                      placeholder="+91 98765 43210"
+                    />
+                  </div>
                 </div>
 
                 {/* Submit button */}
