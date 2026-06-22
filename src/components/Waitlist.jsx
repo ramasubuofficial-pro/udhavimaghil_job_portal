@@ -148,7 +148,9 @@ export default function Waitlist() {
 
                 {/* Email input */}
                 <div className="space-y-3">
-                  <label htmlFor="email" className="text-sm font-semibold text-slate-700 dark:text-slate-300">Email Address</label>
+                  <label htmlFor="email" className="text-sm font-semibold text-slate-700 dark:text-slate-300">
+                    {userType === 'recruiter' ? 'Work Email' : 'Email Address'}
+                  </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                       <Mail className="h-5 w-5 text-slate-400" />
@@ -160,7 +162,7 @@ export default function Waitlist() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       className={`block w-full pl-11 pr-4 py-3.5 bg-slate-50 dark:bg-slate-950 border ${status === 'error' ? 'border-red-500' : 'border-slate-200 dark:border-slate-800'} rounded-xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-colors`}
-                      placeholder="john@example.com"
+                      placeholder={userType === 'recruiter' ? "john@company.com" : "john@example.com"}
                     />
                   </div>
                   {status === 'error' && (
@@ -170,7 +172,9 @@ export default function Waitlist() {
 
                 {/* Phone Number input */}
                 <div className="space-y-3">
-                  <label htmlFor="phone" className="text-sm font-semibold text-slate-700 dark:text-slate-300">Phone Number (For WhatsApp)</label>
+                  <label htmlFor="phone" className="text-sm font-semibold text-slate-700 dark:text-slate-300">
+                    {userType === 'recruiter' ? 'Phone Number (Optional)' : 'Phone Number (For WhatsApp)'}
+                  </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                       <Phone className="h-5 w-5 text-slate-400" />
@@ -178,7 +182,7 @@ export default function Waitlist() {
                     <input 
                       type="tel" 
                       id="phone" 
-                      required
+                      required={userType === 'seeker'}
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                       className={`block w-full pl-11 pr-4 py-3.5 bg-slate-50 dark:bg-slate-950 border ${status === 'error' ? 'border-red-500' : 'border-slate-200 dark:border-slate-800'} rounded-xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-colors`}
